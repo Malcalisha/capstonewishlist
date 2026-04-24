@@ -18,7 +18,7 @@ class Place(models.Model):
             if old_place.photo != self.photo:
                 self.delete_photo(old_place.photo)
 
-            super().save(*args, **kwargs)
+        super().save(*args, **kwargs)  # indentation - make sure the save method is always called
 
     def delete_photo(self, photo):
         if default_storage.exists(photo.name):
@@ -31,7 +31,7 @@ class Place(models.Model):
         super().delete(*args, **kwargs)
 
 
-    def _str_(self):
+    def __str__(self):
         photo_str = self.photo.url if self.photo else 'no photo'
         notes_str = self.notes[100:] if self.notes else 'no notes'
         return f'{ self.name}, visited? {self.visited} on {self.date_visited}. Notes: {notes_str}. Photo {photo_str}'
